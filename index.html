@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>♥ Piso 7 ♥ el fotolog oficial</title>
+<style>
+  :root{
+    --hotpink:#ff1fa1;
+    --hotpink-dark:#c2007c;
+    --purple-deep:#3a0071;
+    --purple-mid:#7b2ff7;
+    --lime:#d4ff2b;
+    --black:#111;
+    --white:#fff;
+    --linkblue:#0000ee;
+    --linkvisited:#551a8b;
+    --cream:#fff7e8;
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{margin:0;padding:0;}
+
+  body{
+    font-family:Verdana, Tahoma, Geneva, sans-serif;
+    font-size:12px;
+    color:var(--black);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,255,255,.5) 0 2px, transparent 3px),
+      radial-gradient(circle at 85% 10%, rgba(255,255,255,.5) 0 2px, transparent 3px),
+      radial-gradient(circle at 60% 70%, rgba(255,255,255,.4) 0 2px, transparent 3px),
+      radial-gradient(circle at 30% 85%, rgba(255,255,255,.4) 0 2px, transparent 3px),
+      radial-gradient(circle at 95% 60%, rgba(255,255,255,.4) 0 2px, transparent 3px),
+      linear-gradient(135deg, var(--purple-deep), var(--purple-mid) 45%, var(--hotpink) 100%);
+    background-attachment:fixed;
+    min-height:100vh;
+  }
+
+  a{color:var(--linkblue); text-decoration:underline;}
+  a:visited{color:var(--linkvisited);}
+  a:hover{color:var(--hotpink-dark);}
+
+  /* ---------- marquee banner ---------- */
+  .marquee-wrap{
+    background:var(--black);
+    color:var(--lime);
+    font-family:'Courier New', monospace;
+    font-weight:bold;
+    letter-spacing:1px;
+    overflow:hidden;
+    white-space:nowrap;
+    border-bottom:3px solid var(--hotpink);
+    padding:4px 0;
+  }
+  .marquee-track{
+    display:inline-block;
+    padding-left:100%;
+    animation:scrollleft 18s linear infinite;
+  }
+  @keyframes scrollleft{
+    from{transform:translateX(0);}
+    to{transform:translateX(-100%);}
+  }
+
+  /* ---------- page shell ---------- */
+  .page{
+    max-width:780px;
+    margin:22px auto 60px;
+    background:var(--white);
+    border:4px solid var(--black);
+    box-shadow:8px 8px 0 var(--black);
+  }
+
+  /* ---------- header ---------- */
+  header.site-head{
+    background:repeating-linear-gradient(45deg, var(--hotpink), var(--hotpink) 10px, var(--hotpink-dark) 10px, var(--hotpink-dark) 20px);
+    border-bottom:4px solid var(--black);
+    padding:14px 18px 10px;
+    position:relative;
+  }
+  .logo{
+    font-family:'Comic Sans MS', 'Chalkboard SE', cursive;
+    font-size:34px;
+    color:var(--white);
+    text-shadow:
+      2px 2px 0 var(--purple-deep),
+      -1px -1px 0 var(--black),
+      1px -1px 0 var(--black),
+      -1px 1px 0 var(--black),
+      1px 1px 0 var(--black);
+    margin:0;
+    line-height:1;
+  }
+  .logo .dot{color:var(--lime);}
+  .tagline{
+    font-family:'Comic Sans MS', cursive;
+    color:var(--white);
+    font-size:13px;
+    margin-top:2px;
+    text-shadow:1px 1px 0 var(--black);
+  }
+  .sparkles{
+    position:absolute;
+    top:10px; right:16px;
+    font-size:20px;
+  }
+
+  nav.tabs{
+    display:flex;
+    background:var(--black);
+    border-bottom:4px solid var(--black);
+  }
+  nav.tabs a{
+    flex:1;
+    text-align:center;
+    color:var(--lime);
+    text-decoration:none;
+    font-weight:bold;
+    padding:8px 4px;
+    border-right:2px dashed var(--purple-mid);
+    font-family:Verdana, sans-serif;
+    font-size:11px;
+    letter-spacing:.5px;
+  }
+  nav.tabs a:last-child{border-right:none;}
+  nav.tabs a.active, nav.tabs a:hover{
+    background:var(--hotpink);
+    color:var(--white);
+  }
+
+  /* ---------- layout ---------- */
+  .body-grid{
+    display:grid;
+    grid-template-columns:200px 1fr;
+  }
+  @media (max-width:600px){
+    .body-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- sidebar ---------- */
+  .sidebar{
+    background:var(--cream);
+    border-right:4px solid var(--black);
+    padding:14px 12px;
+  }
+  .avatar-frame{
+    border:3px solid var(--black);
+    box-shadow:4px 4px 0 var(--purple-mid);
+    background:var(--white);
+    padding:4px;
+    margin-bottom:10px;
+  }
+  .avatar-frame img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .status-online{
+    font-size:11px;
+    font-weight:bold;
+    color:#0a8a0a;
+    display:flex;
+    align-items:center;
+    gap:5px;
+    margin-bottom:10px;
+  }
+  .dot-blink{
+    width:8px;height:8px;border-radius:50%;
+    background:#0a8a0a;
+    animation:blink 1s steps(2, start) infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  .info-box{
+    background:var(--white);
+    border:2px solid var(--black);
+    padding:8px;
+    margin-bottom:12px;
+    font-size:11px;
+    line-height:1.6;
+  }
+  .info-box b{color:var(--hotpink-dark);}
+  .info-box .counter{
+    font-family:'Courier New', monospace;
+    background:var(--black);
+    color:var(--lime);
+    display:inline-block;
+    padding:2px 6px;
+    letter-spacing:2px;
+    font-weight:bold;
+  }
+
+  .side-title{
+    font-family:'Comic Sans MS', cursive;
+    background:var(--purple-mid);
+    color:var(--white);
+    padding:4px 8px;
+    font-size:12px;
+    margin:14px 0 8px;
+    border:2px solid var(--black);
+  }
+
+  .friends-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+  }
+  .friend{
+    border:2px solid var(--black);
+    background:var(--white);
+    text-align:center;
+    font-size:9px;
+    padding:3px;
+    text-decoration:none;
+    color:var(--black);
+  }
+  .friend img{
+    width:100%;
+    display:block;
+    margin-bottom:2px;
+    border-bottom:2px solid var(--black);
+  }
+  .friend:hover{background:var(--lime);}
+
+  .music-widget{
+    background:var(--black);
+    border:2px solid var(--hotpink);
+    color:var(--lime);
+    font-family:'Courier New', monospace;
+    font-size:10px;
+    padding:8px;
+    margin-top:12px;
+  }
+  .music-widget .track{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .music-widget button{
+    background:var(--hotpink);
+    color:var(--white);
+    border:2px solid var(--white);
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:6px;
+    font-size:10px;
+    padding:2px 8px;
+  }
+
+  /* ---------- main column ---------- */
+  main{
+    padding:16px;
+  }
+
+  .section-title{
+    font-family:'Comic Sans MS', cursive;
+    font-size:20px;
+    color:var(--hotpink-dark);
+    text-shadow:1px 1px 0 var(--purple-mid);
+    border-bottom:3px dotted var(--hotpink);
+    padding-bottom:6px;
+    margin:0 0 14px;
+  }
+
+  /* photo of the day */
+  .pod-wrap{
+    display:flex;
+    justify-content:center;
+    margin-bottom:6px;
+  }
+  .polaroid{
+    background:var(--white);
+    border:1px solid #ccc;
+    box-shadow:0 6px 14px rgba(0,0,0,.4);
+    padding:12px 12px 40px;
+    transform:rotate(-2deg);
+    position:relative;
+    max-width:100%;
+  }
+  .polaroid .pin{
+    position:absolute;
+    top:-10px; left:50%;
+    transform:translateX(-50%);
+    font-size:26px;
+    filter:drop-shadow(1px 2px 1px rgba(0,0,0,.5));
+  }
+  .polaroid img{
+    display:block;
+    width:100%;
+    max-width:420px;
+    height:auto;
+    background:#eee;
+  }
+  .polaroid figcaption{
+    font-family:'Comic Sans MS', cursive;
+    text-align:center;
+    margin-top:8px;
+    font-size:13px;
+    color:var(--black);
+  }
+  .pod-meta{
+    text-align:center;
+    font-size:11px;
+    color:#555;
+    margin-bottom:6px;
+  }
+  .pod-nav{
+    text-align:center;
+    margin-bottom:20px;
+    font-size:11px;
+  }
+  .pod-nav button{
+    background:var(--purple-mid);
+    color:var(--white);
+    border:2px solid var(--black);
+    font-weight:bold;
+    padding:4px 10px;
+    cursor:pointer;
+    font-family:Verdana, sans-serif;
+    font-size:11px;
+  }
+  .pod-nav button:hover{background:var(--hotpink);}
+  .pod-nav span{
+    display:inline-block;
+    margin:0 10px;
+    font-family:'Courier New', monospace;
+  }
+
+  /* comments / guestbook */
+  .comments{
+    border:2px solid var(--black);
+    background:var(--cream);
+    padding:10px;
+    margin-bottom:26px;
+  }
+  .comments h3{
+    margin:0 0 10px;
+    font-family:'Comic Sans MS', cursive;
+    font-size:14px;
+    color:var(--purple-deep);
+  }
+  .comment{
+    background:var(--white);
+    border:1px solid #999;
+    border-left:5px solid var(--hotpink);
+    padding:6px 8px;
+    margin-bottom:6px;
+    font-size:11px;
+  }
+  .comment .who{
+    font-weight:bold;
+    color:var(--hotpink-dark);
+  }
+  .comment .when{
+    color:#888;
+    font-size:9px;
+  }
+  .comment-form{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin-top:8px;
+  }
+  .comment-form input, .comment-form textarea{
+    font-family:Verdana, sans-serif;
+    font-size:11px;
+    padding:5px;
+    border:2px solid var(--black);
+  }
+  .comment-form button{
+    align-self:flex-start;
+    background:var(--hotpink);
+    color:var(--white);
+    border:2px solid var(--black);
+    font-weight:bold;
+    padding:5px 14px;
+    cursor:pointer;
+  }
+  .comment-form button:hover{background:var(--hotpink-dark);}
+
+  /* archive grid */
+  .archive-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .thumb{
+    background:var(--white);
+    border:2px solid var(--black);
+    box-shadow:3px 3px 0 var(--purple-mid);
+    cursor:pointer;
+    padding:4px;
+  }
+  .thumb img{
+    display:block;
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    background:#eee;
+  }
+  .thumb .thumb-cap{
+    font-size:9px;
+    text-align:center;
+    margin-top:3px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .thumb:hover{outline:3px solid var(--lime);}
+
+  .upload-hint{
+    border:2px dashed var(--purple-mid);
+    background:var(--white);
+    padding:10px;
+    font-size:11px;
+    color:#555;
+    margin-bottom:20px;
+  }
+  .upload-hint code{
+    background:var(--cream);
+    padding:1px 4px;
+    border:1px solid #ccc;
+  }
+
+  /* footer */
+  footer{
+    background:var(--black);
+    color:var(--white);
+    text-align:center;
+    padding:14px;
+    font-size:10px;
+    border-top:4px solid var(--hotpink);
+  }
+  footer .glitter{
+    font-family:'Comic Sans MS', cursive;
+    font-size:14px;
+    background:linear-gradient(90deg, var(--hotpink), var(--lime), var(--purple-mid), var(--hotpink));
+    background-size:300% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:shine 4s linear infinite;
+    display:inline-block;
+    margin-bottom:6px;
+  }
+  @keyframes shine{
+    to{background-position:300% center;}
+  }
+
+  ::selection{background:var(--hotpink); color:var(--white);}
+</style>
+</head>
+<body>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      ✿ ° ☆ BIENVENIDOS A NUESTRO FOTOLOG ☆ ° ✿ &nbsp;&nbsp;&nbsp; Aniversario N°99 DIPRES 2026 · TEMÁTICA AÑOS 2000 &nbsp;&nbsp;&nbsp; ¡DEJANOS TU COMENTARIO! &nbsp;&nbsp;&nbsp; ✿ ° ☆ ° ✿
+    </div>
+  </div>
+
+  <div class="page">
+
+    <header class="site-head">
+      <p class="logo">NuestroEquipo2000<span class="dot">.</span></p>
+      <p class="tagline">el fotolog oficial del piso 7 ★ actualizado a diario ★ no molestar, subiendo fotos</p>
+      <div class="sparkles">✧･ﾟ: *✧･ﾟ:*</div>
+    </header>
+
+    <nav class="tabs">
+      <a href="#foto-del-dia" class="active">Fotolog</a>
+      <a href="#amigos">Amigos</a>
+      <a href="#archivo">Archivo</a>
+      <a href="#comentarios">Comentarios</a>
+    </nav>
+
+    <div class="body-grid">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="avatar-frame">
+          <img id="avatar-img" src="https://placehold.co/200x200/ff1fa1/ffffff.png?text=Foto+de+Perfil" alt="Foto de perfil del equipo">
+        </div>
+
+        <div class="status-online"><span class="dot-blink"></span> en línea ahora</div>
+
+        <div class="info-box">
+          <div><b>Alias:</b> equipo2000</div>
+          <div><b>Vivimos en:</b> la oficina</div>
+          <div><b>Somos:</b> <span id="friend-count">0</span> compas</div>
+          <div><b>Visitas:</b> <span class="counter" id="visit-counter">000000</span></div>
+        </div>
+
+        <p class="side-title">★ Amigos ★</p>
+        <div class="friends-grid" id="amigos"></div>
+
+        <div class="music-widget">
+          ♫ ahora sonando<br>
+          <span class="track" id="now-playing">Cargando playlist 2000s...</span>
+          <br>
+          <button id="play-btn">▶ play</button>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main>
+
+        <section id="foto-del-dia">
+          <h2 class="section-title">📸 Foto del día</h2>
+          <div class="pod-wrap">
+            <figure class="polaroid">
+              <span class="pin">📌</span>
+              <img id="pod-img" src="" alt="Foto del día">
+              <figcaption id="pod-caption"></figcaption>
+            </figure>
+          </div>
+          <p class="pod-meta" id="pod-meta"></p>
+          <div class="pod-nav">
+            <button id="prev-btn">« anterior</button>
+            <span id="pod-index">1 / 1</span>
+            <button id="next-btn">siguiente »</button>
+          </div>
+        </section>
+
+        <section id="comentarios" class="comments">
+          <h3>💬 Comentarios (<span id="comment-count">0</span>)</h3>
+          <div id="comment-list"></div>
+          <form class="comment-form" id="comment-form">
+            <input type="text" id="comment-name" placeholder="tu nick" required maxlength="30">
+            <textarea id="comment-text" rows="2" placeholder="dejá tu comentario acá..." required maxlength="200"></textarea>
+            <button type="submit">firmar ✍</button>
+          </form>
+        </section>
+
+        <section id="archivo">
+          <h2 class="section-title">🗂️ Archivo de fotos</h2>
+          <div class="upload-hint">
+            👉 Para agregar fotos reales: subí los archivos a la carpeta <code>/photos</code> del repositorio
+            y agregá un objeto nuevo al arreglo <code>fotos</code> dentro de <code>&lt;script&gt;</code> en este mismo archivo
+            (mirá el comentario "AGREGAR FOTOS ACÁ" en el código). No hace falta tocar nada más del diseño.
+          </div>
+          <div class="archive-grid" id="archive-grid"></div>
+        </section>
+
+      </main>
+    </div>
+
+    <footer>
+      <div class="glitter">✿ hecho con amor ochentoso y nostalgia noventera para la fiesta de alianzas ✿</div>
+      <div>© 2026 NuestroEquipo2000 · fotolog no oficial · mejor visto a 800x600 · besos 😘</div>
+    </footer>
+
+  </div>
+
+<script>
+/* =========================================================
+   DATOS: FOTOS
+   =========================================================
+   AGREGAR FOTOS ACÁ. Cada foto es un objeto con:
+     src:      ruta de la imagen (ej: "photos/oficina1.jpg")
+     caption:  texto corto tipo Comic Sans de la foto
+     date:     fecha a mostrar (texto libre)
+     comments: arreglo de comentarios iniciales (opcional)
+
+   Por ahora hay fotos de ejemplo (placeholders). Reemplazalas
+   o agregá más siguiendo el mismo formato.
+   ========================================================= */
+const fotos = [
+  {
+    src: "https://placehold.co/500x500/9d4edd/ffffff.png?text=Sube+tu+foto+aqui+%231",
+    caption: "el equipo listo pa' la fiesta ✨",
+    date: "hoy",
+    comments: [
+      { who: "xxPauLoVeRxx", when: "hace 2 días", text: "QUE LINDA FOTO!! los amo a todos jaja" },
+      { who: "carlitos_rulez", when: "hace 1 día", text: "epico. la temática 2000 nos quedó de 10" }
+    ]
+  },
+  {
+    src: "https://placehold.co/500x500/ff1fa1/ffffff.png?text=Sube+tu+foto+aqui+%232",
+    caption: "preparando la decoración :)",
+    date: "ayer",
+    comments: []
+  },
+  {
+    src: "https://placehold.co/500x500/3a0071/ffffff.png?text=Sube+tu+foto+aqui+%233",
+    caption: "ensayo de baile jsjsjs",
+    date: "hace 2 días",
+    comments: []
+  },
+  {
+    src: "https://placehold.co/500x500/d4ff2b/111111.png?text=Sube+tu+foto+aqui+%234",
+    caption: "todo listo!!",
+    date: "hace 3 días",
+    comments: []
+  }
+];
+
+/* =========================================================
+   DATOS: AMIGOS (compañeros de equipo)
+   AGREGAR / EDITAR ACÁ.
+   ========================================================= */
+const amigos = [
+  { name: "Sofi", img: "https://placehold.co/80x80/ff1fa1/ffffff.png?text=%3A%29" },
+  { name: "Male", img: "https://placehold.co/80x80/9d4edd/ffffff.png?text=%3A%29" },
+  { name: "Nico", img: "https://placehold.co/80x80/3a0071/ffffff.png?text=%3A%29" },
+  { name: "Pancho", img: "https://placehold.co/80x80/d4ff2b/111111.png?text=%3A%29" }
+];
+
+/* =========================================================
+   DATOS: PLAYLIST (solo decorativo, texto)
+   ========================================================= */
+const playlist = [
+  "Britney Spears - Toxic",
+  "Black Eyed Peas - Where Is The Love",
+  "Shakira - Whenever, Wherever",
+  "Daddy Yankee - Gasolina",
+  "Avril Lavigne - Complicated"
+];
+
+/* ---------------------------------------------------------
+   Render: amigos
+--------------------------------------------------------- */
+const amigosGrid = document.getElementById("amigos");
+amigos.forEach(a => {
+  const el = document.createElement("a");
+  el.className = "friend";
+  el.href = "#";
+  el.innerHTML = `<img src="${a.img}" alt="${a.name}">${a.name}`;
+  amigosGrid.appendChild(el);
+});
+document.getElementById("friend-count").textContent = amigos.length;
+
+/* ---------------------------------------------------------
+   Render: foto del día + navegación
+--------------------------------------------------------- */
+let podIndex = 0;
+
+function renderComments(list){
+  const wrap = document.getElementById("comment-list");
+  wrap.innerHTML = "";
+  list.forEach(c => {
+    const div = document.createElement("div");
+    div.className = "comment";
+    div.innerHTML = `<span class="who">${escapeHtml(c.who)}</span> <span class="when">· ${escapeHtml(c.when)}</span><br>${escapeHtml(c.text)}`;
+    wrap.appendChild(div);
+  });
+  document.getElementById("comment-count").textContent = list.length;
+}
+
+function renderPod(){
+  const f = fotos[podIndex];
+  document.getElementById("pod-img").src = f.src;
+  document.getElementById("pod-img").alt = f.caption;
+  document.getElementById("pod-caption").textContent = f.caption;
+  document.getElementById("pod-meta").textContent = "publicada " + f.date;
+  document.getElementById("pod-index").textContent = (podIndex + 1) + " / " + fotos.length;
+  renderComments(f.comments || []);
+}
+
+document.getElementById("prev-btn").addEventListener("click", () => {
+  podIndex = (podIndex - 1 + fotos.length) % fotos.length;
+  renderPod();
+});
+document.getElementById("next-btn").addEventListener("click", () => {
+  podIndex = (podIndex + 1) % fotos.length;
+  renderPod();
+});
+
+/* ---------------------------------------------------------
+   Render: archivo (grilla de miniaturas)
+--------------------------------------------------------- */
+const archiveGrid = document.getElementById("archive-grid");
+fotos.forEach((f, i) => {
+  const div = document.createElement("div");
+  div.className = "thumb";
+  div.innerHTML = `<img src="${f.src}" alt="${escapeHtml(f.caption)}"><div class="thumb-cap">${escapeHtml(f.caption)}</div>`;
+  div.addEventListener("click", () => {
+    podIndex = i;
+    renderPod();
+    document.getElementById("foto-del-dia").scrollIntoView({behavior:"smooth"});
+  });
+  archiveGrid.appendChild(div);
+});
+
+renderPod();
+
+/* ---------------------------------------------------------
+   Formulario de comentarios (se guarda solo en esta sesión,
+   se pierde al recargar la página — es una página estática)
+--------------------------------------------------------- */
+document.getElementById("comment-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const nameInput = document.getElementById("comment-name");
+  const textInput = document.getElementById("comment-text");
+  const name = nameInput.value.trim();
+  const text = textInput.value.trim();
+  if(!name || !text) return;
+
+  fotos[podIndex].comments = fotos[podIndex].comments || [];
+  fotos[podIndex].comments.push({ who: name, when: "recién", text: text });
+  renderComments(fotos[podIndex].comments);
+
+  nameInput.value = "";
+  textInput.value = "";
+});
+
+function escapeHtml(str){
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/* ---------------------------------------------------------
+   Contador de visitas (decorativo — una página estática no
+   puede contar visitas reales sin un servicio externo).
+--------------------------------------------------------- */
+document.getElementById("visit-counter").textContent =
+  String(1000 + Math.floor(Math.random() * 8999)).padStart(6, "0");
+
+/* ---------------------------------------------------------
+   Reproductor decorativo (no reproduce audio real)
+--------------------------------------------------------- */
+let trackIndex = 0;
+let playing = false;
+const nowPlaying = document.getElementById("now-playing");
+const playBtn = document.getElementById("play-btn");
+nowPlaying.textContent = playlist[trackIndex];
+
+playBtn.addEventListener("click", () => {
+  playing = !playing;
+  playBtn.textContent = playing ? "❚❚ pausa" : "▶ play";
+});
+
+setInterval(() => {
+  if(playing){
+    trackIndex = (trackIndex + 1) % playlist.length;
+    nowPlaying.textContent = playlist[trackIndex];
+  }
+}, 6000);
+</script>
+
+</body>
+</html>
