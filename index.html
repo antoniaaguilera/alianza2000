@@ -247,7 +247,20 @@
     font-size:10px;
     padding:2px 8px;
   }
-
+.video-frame{
+    position:relative;
+    width:100%;
+    padding-top:56.25%; /* 16:9 */
+    border:2px solid var(--hotpink);
+  }
+  .video-frame iframe{
+    position:absolute;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    border:0;
+  }
+ 
   /* ---------- main column ---------- */
   main{
     padding:16px;
@@ -464,7 +477,7 @@
 
     <header class="site-head">
       <p class="logo">PISO 7 ☆ 2000 <span class="dot">.</span></p>
-      <p class="tagline">el fotolog oficial del piso 7 ★ actualizado a diario ★ no molestar, subiendo fotos</p>
+      <p class="tagline">el fotolog oficial del piso 7 xD ★ actualizado a diario ★ no molestar, subiendo fotos</p>
       <div class="sparkles">✧･ﾟ: *✧･ﾟ:*</div>
     </header>
 
@@ -496,10 +509,15 @@
         <div class="friends-grid" id="amigos"></div>
 
         <div class="music-widget">
-          ♫ ahora sonando<br>
-          <span class="track" id="now-playing">Cargando playlist 2000s...</span>
-          <br>
-          <button id="play-btn">▶ play</button>
+          <div class="widget-label">♫ ahora sonando</div>
+          <div class="video-frame">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ
+            title="Video de la playlist"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
         </div>
       </aside>
 
@@ -547,8 +565,8 @@
     </div>
 
     <footer>
-      <div class="glitter">✿ hecho con amor ochentoso y nostalgia noventera para la fiesta de alianzas ✿</div>
-      <div>© 2026 NuestroEquipo2000 · fotolog no oficial · mejor visto a 800x600 · besos 😘</div>
+      <div class="glitter">✿ HeCH0 por El pizzoo sie7e✿</div>
+      <div>© 2026 · fotolog no oficial · mejor visto a 800x600 · besos 😘</div>
     </footer>
 
   </div>
@@ -610,13 +628,7 @@ const amigos = [
 /* =========================================================
    DATOS: PLAYLIST (solo decorativo, texto)
    ========================================================= */
-const playlist = [
-  "Britney Spears - Toxic",
-  "Black Eyed Peas - Where Is The Love",
-  "Shakira - Whenever, Wherever",
-  "Daddy Yankee - Gasolina",
-  "Avril Lavigne - Complicated"
-];
+
 
 /* ---------------------------------------------------------
    Render: amigos
@@ -718,26 +730,7 @@ function escapeHtml(str){
 document.getElementById("visit-counter").textContent =
   String(1000 + Math.floor(Math.random() * 8999)).padStart(6, "0");
 
-/* ---------------------------------------------------------
-   Reproductor decorativo (no reproduce audio real)
---------------------------------------------------------- */
-let trackIndex = 0;
-let playing = false;
-const nowPlaying = document.getElementById("now-playing");
-const playBtn = document.getElementById("play-btn");
-nowPlaying.textContent = playlist[trackIndex];
 
-playBtn.addEventListener("click", () => {
-  playing = !playing;
-  playBtn.textContent = playing ? "❚❚ pausa" : "▶ play";
-});
-
-setInterval(() => {
-  if(playing){
-    trackIndex = (trackIndex + 1) % playlist.length;
-    nowPlaying.textContent = playlist[trackIndex];
-  }
-}, 6000);
 </script>
 
 </body>
